@@ -24,7 +24,7 @@ import (
 // their label values. metricVec is not used directly (and therefore
 // unexported). It is used as a building block for implementations of vectors of
 // a given metric type, like GaugeVec, CounterVec, SummaryVec, and HistogramVec.
-// It also handles label currying.
+// It also handles label currying. It uses basicMetricVec internally.
 type metricVec struct {
 	*metricMap
 
@@ -277,9 +277,6 @@ func (m *metricMap) deleteByHashWithLabelValues(
 func (m *metricMap) deleteByHashWithLabels(
 	h uint64, labels Labels, curry []curriedLabelValue,
 ) bool {
-	m.mtx.Lock()
-	defer m.mtx.Unlock()
-
 	metrics, ok := m.metrics[h]
 	if !ok {
 		return false
