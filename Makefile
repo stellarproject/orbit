@@ -25,6 +25,7 @@
 
 PACKAGES=$(shell go list ./... | grep -v /vendor/)
 REVISION=$(shell git rev-parse HEAD)
+VERSION=2
 GO_LDFLAGS=-s -w -X github.com/stellarproject/orbit/version.Version=$(VERSION) -X github.com/stellarproject/orbit/version.Revision=$(REVISION)
 VAB_ARGS=""
 

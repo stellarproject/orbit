@@ -1,0 +1,11 @@
+id = "redis-01"
+image = "docker.io/library/redis:4.0-alpine"
+
+[[networks]]
+	type = "host"
+
+[resources]
+	cpu = 1.5
+	memory = 64
+
+services = ["redis.io"]
