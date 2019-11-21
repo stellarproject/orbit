@@ -72,7 +72,7 @@ func (n *cni) Create(ctx context.Context, task containerd.Container) (string, er
 		if err := createNetns(path); err != nil {
 			return "", errors.Wrap(err, "create netns")
 		}
-		result, err := n.network.Setup(task.ID(), path)
+		result, err := n.network.Setup(ctx, task.ID(), path)
 		if err != nil {
 			return "", errors.Wrap(err, "setup cni network")
 		}
@@ -97,7 +97,7 @@ func (n *cni) Create(ctx context.Context, task containerd.Container) (string, er
 
 func (n *cni) Remove(ctx context.Context, c containerd.Container) error {
 	path := filepath.Join(n.config.State, c.ID(), "net")
-	if err := n.network.Remove(c.ID(), path); err != nil {
+	if err := n.network.Remove(ctx, c.ID(), path); err != nil {
 		logrus.WithError(err).Error("remove cni gocni")
 	}
 	if err := unix.Unmount(path, 0); err != nil {

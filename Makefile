@@ -25,14 +25,14 @@
 
 PACKAGES=$(shell go list ./... | grep -v /vendor/)
 REVISION=$(shell git rev-parse HEAD)
-GO_LDFLAGS=-s -w -X github.com/stellarproject/terraos/version.Version=$(VERSION) -X github.com/stellarproject/terraos/version.Revision=$(REVISION)
+GO_LDFLAGS=-s -w -X github.com/stellarproject/orbit/version.Version=$(VERSION) -X github.com/stellarproject/orbit/version.Revision=$(REVISION)
 VAB_ARGS=""
 
 all: FORCE
-	go build -o build/orbit-server -v -ldflags '${GO_LDFLAGS}' github.com/stellarproject/terraos/cmd/orbit-server
-	go build -o build/ob -v -ldflags '${GO_LDFLAGS}' github.com/stellarproject/terraos/cmd/ob
-	go build -o build/orbit-log -v -ldflags '${GO_LDFLAGS}' github.com/stellarproject/terraos/cmd/orbit-log
-	go build -o build/orbit-syslog -v -ldflags '${GO_LDFLAGS}' github.com/stellarproject/terraos/cmd/orbit-syslog
+	go build -o build/orbit-server -v -ldflags '${GO_LDFLAGS}' github.com/stellarproject/orbit/cmd/orbit-server
+	go build -o build/ob -v -ldflags '${GO_LDFLAGS}' github.com/stellarproject/orbit/cmd/ob
+	go build -o build/orbit-log -v -ldflags '${GO_LDFLAGS}' github.com/stellarproject/orbit/cmd/orbit-log
+	go build -o build/orbit-syslog -v -ldflags '${GO_LDFLAGS}' github.com/stellarproject/orbit/cmd/orbit-syslog
 	gcc -static -o build/orbit-network cmd/orbit-network/main.c
 
 clean:
