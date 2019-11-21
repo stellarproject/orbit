@@ -34,8 +34,8 @@ import (
 	"time"
 
 	"github.com/containerd/containerd"
-	"github.com/stellarproject/terraos/opts"
-	"github.com/stellarproject/terraos/util"
+	"github.com/stellarproject/orbit/opts"
+	"github.com/stellarproject/orbit/util"
 )
 
 type Config struct {

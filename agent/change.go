@@ -33,9 +33,9 @@ import (
 	"github.com/containerd/containerd"
 	"github.com/containerd/containerd/containers"
 	"github.com/containerd/containerd/errdefs"
-	v1 "github.com/stellarproject/terraos/api/v1/orbit"
-	"github.com/stellarproject/terraos/opts"
-	"github.com/stellarproject/terraos/pkg/flux"
+	v1 "github.com/stellarproject/orbit/api/orbit/v1"
+	"github.com/stellarproject/orbit/opts"
+	"github.com/stellarproject/orbit/pkg/flux"
 )
 
 type change interface {
