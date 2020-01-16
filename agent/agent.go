@@ -912,8 +912,7 @@ func (a *Agent) getNetwork(networks []*types.Any) (network, error) {
 		return &none{}, nil
 	}
 	var (
-		networkType string
-		opts        = []gocni.CNIOpt{
+		opts = []gocni.CNIOpt{
 
 			gocni.WithPluginDir([]string{"/opt/containerd/bin", "/usr/local/bin"}),
 		}
@@ -925,22 +924,13 @@ func (a *Agent) getNetwork(networks []*types.Any) (network, error) {
 		}
 		switch c := v.(type) {
 		case *v1.HostNetwork:
-			networkType = "host"
-			ip, err := util.GetIP(a.config.Iface)
-			if err != nil {
-				return nil, err
-			}
 			// only one host network is allowed
 			return &host{
-				ip: ip,
+				ip: "",
 			}, nil
 		case *v1.CNINetwork:
-			networkType = c.Type
 			if c.Name == "" {
 				c.Name = a.config.Domain
-			}
-			if c.Master == "" {
-				c.Master = a.config.Iface
 			}
 			opts = append(opts, gocni.WithConfIndex(c.MarshalCNI(), i))
 		default:
@@ -953,9 +943,7 @@ func (a *Agent) getNetwork(networks []*types.Any) (network, error) {
 		return nil, err
 	}
 	return cni.New(cni.Config{
-		Type:  networkType,
 		State: a.config.State,
-		Iface: a.config.Iface,
 	}, n)
 }
 

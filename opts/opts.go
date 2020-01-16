@@ -229,6 +229,7 @@ func withResources(r *v1.Resources) oci.SpecOpts {
 			score := int(r.Score)
 			s.Process.OOMScoreAdj = &score
 		}
+
 		if r.NoFile > 0 {
 			s.Process.Rlimits = []specs.POSIXRlimit{
 				{

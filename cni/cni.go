@@ -43,9 +43,7 @@ import (
 )
 
 type Config struct {
-	Type  string
 	State string
-	Iface string
 }
 
 func New(c Config, n gocni.CNI) (*cni, error) {
