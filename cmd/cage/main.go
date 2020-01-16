@@ -3,9 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"os/signal"
 	"syscall"
+	"text/tabwriter"
 
 	"github.com/containerd/containerd/namespaces"
 	"github.com/sirupsen/logrus"
@@ -47,11 +49,35 @@ func main() {
 		}
 		return nil
 	}
-	/*
-		app.Action = func(clix *cli.Context) error {
-			return nil
+	app.Action = func(clix *cli.Context) error {
+		dirs, err := ioutil.ReadDir(root)
+		if err != nil {
+			return err
 		}
-	*/
+		w := tabwriter.NewWriter(os.Stdout, 10, 1, 3, ' ', 0)
+		const tfmt = "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%d\n"
+		fmt.Fprint(w, "ID\tIMAGE\tSTATUS\tIP\tCPU\tMEMORY\tPIDS\tSIZE\tREVISIONS\n")
+		for _, c := range dirs {
+			if !c.IsDir() {
+				continue
+			}
+			if c.Name() == "content" {
+				continue
+			}
+			fmt.Fprintf(w, tfmt,
+				c.Name(),
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				0,
+			)
+		}
+		return w.Flush()
+	}
 	if err := app.Run(os.Args); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
