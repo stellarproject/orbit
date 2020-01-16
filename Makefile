@@ -30,8 +30,7 @@ GO_LDFLAGS=-s -w -X github.com/stellarproject/orbit/version.Version=$(VERSION) -
 VAB_ARGS=""
 
 all: FORCE
-	go build -o build/orbit-server -v -ldflags '${GO_LDFLAGS}' github.com/stellarproject/orbit/cmd/orbit-server
-	go build -o build/ob -v -ldflags '${GO_LDFLAGS}' github.com/stellarproject/orbit/cmd/ob
+	go build -o build/cage -v -ldflags '${GO_LDFLAGS}' github.com/stellarproject/orbit/cmd/cage
 	go build -o build/orbit-log -v -ldflags '${GO_LDFLAGS}' github.com/stellarproject/orbit/cmd/orbit-log
 	go build -o build/orbit-syslog -v -ldflags '${GO_LDFLAGS}' github.com/stellarproject/orbit/cmd/orbit-syslog
 	gcc -static -o build/orbit-network cmd/orbit-network/main.c
@@ -42,10 +41,9 @@ clean:
 FORCE:
 
 install:
-	@install build/ob /usr/local/bin/
+	@install build/cage /usr/local/bin/
 	@install build/orbit-log /usr/local/bin/
 	@install build/orbit-syslog /usr/local/bin/
-	@install build/orbit-server /usr/local/bin/
 	@install build/orbit-network /usr/local/bin/
 
 protos:
