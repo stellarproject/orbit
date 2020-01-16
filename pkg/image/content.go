@@ -136,6 +136,14 @@ func getConfig(ctx context.Context, provider content.Provider, desc v1.Descripto
 	return &config, nil
 }
 
+func GetConfig(ctx context.Context, cs content.Store, desc v1.Descriptor) (*Image, error) {
+	manifest, err := images.Manifest(ctx, cs, desc, nil)
+	if err != nil {
+		return nil, err
+	}
+	return getConfig(ctx, cs, manifest.Config)
+}
+
 func getLayers(ctx context.Context, cs content.Store, desc v1.Descriptor) (*Image, []rootfs.Layer, error) {
 	manifest, err := images.Manifest(ctx, cs, desc, nil)
 	if err != nil {

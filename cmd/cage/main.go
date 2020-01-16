@@ -7,6 +7,7 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/containerd/containerd/namespaces"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
@@ -58,7 +59,7 @@ func main() {
 }
 
 func cancelContext() context.Context {
-	ctx, cancel := context.WithCancel(context.Background())
+	ctx, cancel := context.WithCancel(namespaces.WithNamespace(context.Background(), "cage"))
 	s := make(chan os.Signal)
 	signal.Notify(s, syscall.SIGTERM, syscall.SIGINT)
 	go func() {
